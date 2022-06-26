@@ -73,6 +73,42 @@ export class ColorRgb {
     return `hsv(${this._h}, ${this._s * 100}%, ${this._v * 100}%)`;
   }
 
+  set hex(value) {
+    this._hex = value;
+    this.fromHex();
+  }
+
+  get hex() {
+    return this._hex;
+  }
+
+  set r(value) {
+    this._r = value;
+    this.fromRgb();
+  }
+
+  get r() {
+    return Math.round(this._r);
+  }
+
+  set g(value) {
+    this._g = value;
+    this.fromRgb();
+  }
+
+  get g() {
+    return Math.round(this._g);
+  }
+
+  set b(value) {
+    this._b = value;
+    this.fromRgb();
+  }
+
+  get b() {
+    return Math.round(this._b);
+  }
+
   set h(value) {
     this._h = value;
     this.fromHsl();
