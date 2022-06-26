@@ -12,12 +12,16 @@ const complementary = (color) => {
   return newCol;
 };
 
+const outputIds = ['r', 'g', 'b', 'h', 's', 'l', 'v'];
+
 const outputColor = (hex) => {
-  const output = document.getElementById('pick-output');
+  //const output = document.getElementById('pick-output');
   const hslOutput = document.getElementById('hsl-output');
   const color = new ColorRgb(hex);
-  output.innerText = `${color._r} ${color._g} ${color._b}`;
-  console.log(color);
+  outputIds.forEach((id) => {
+    const element = document.getElementById(id);
+    element.innerText = color[id];
+  });
   const newCol = complementary(color);
   hslOutput.style.backgroundColor = newCol.hslCss();
 };

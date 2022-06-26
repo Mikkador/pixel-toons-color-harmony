@@ -79,7 +79,7 @@ export class ColorRgb {
   }
 
   get h() {
-    return this._h;
+    return Math.round(this._h);
   }
 
   set s(value) {
@@ -88,7 +88,7 @@ export class ColorRgb {
   }
 
   get s() {
-    return this._s;
+    return Math.round(this._s * 100) + '%';
   }
 
   set l(value) {
@@ -97,6 +97,6 @@ export class ColorRgb {
   }
 
   get l() {
-    return this._l;
+    return Math.round(this._l * 100) + '%';
   }
 }
