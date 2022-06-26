@@ -2,13 +2,13 @@ export class ColorRgb {
   constructor(hex) {
     this._hex = hex;
     this.fromHex();
+    this.fromRgb();
   }
 
   fromHex() {
     this._r = parseInt(this._hex.substr(1, 2), 16);
     this._g = parseInt(this._hex.substr(3, 2), 16);
     this._b = parseInt(this._hex.substr(5, 2), 16);
-    this.fromRgb();
   }
 
   fromRgb() {
@@ -58,12 +58,7 @@ export class ColorRgb {
   }
 
   copy() {
-    const col = new ColorRgb('');
-    col._r = this._r;
-    col._b = this._b;
-    col._g = this._g;
-    col.fromRgb();
-    return col;
+    return new ColorRgb(this._hex);
   }
 
   rgbCss() {
