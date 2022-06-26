@@ -65,7 +65,17 @@ const triadic = (color) => {
   return [color, a, b];
 };
 
-const choices = [monochromatic, complementary, analogous, splitComplementary, triadic];
+const tetradic = (color) => {
+  const a = color.copy();
+  a.h += 20;
+  const b = a.copy();
+  b.h += 140;
+  const c = b.copy();
+  c.h += 20;
+  return [color, a, b, c];
+}
+
+const choices = [monochromatic, complementary, analogous, splitComplementary, triadic, tetradic];
 
 const getColorElement = (color) => {
   const element = document.createElement('div');
