@@ -1,3 +1,8 @@
 body {
     background-color: aquamarine;
 }
+
+#hsl-output {
+    width: 60px;
+    height: 60px;
+}

@@ -32,12 +32,21 @@ const toHsl = (color) => {
   return { hue, saturation, lightness };
 };
 
+const monochromatic = (color) => {
+  color.saturation /= 2;
+  console.log(color);
+};
+
 window.onload = () => {
   const picker = document.getElementById('pick-color');
   const output = document.getElementById('pick-output');
+  const hslOutput = document.getElementById('hsl-output');
   picker.oninput = () => {
     const color = getColor(picker.value);
     output.innerText = `${color.r} ${color.g} ${color.b}`;
     console.log(toHsl(color));
+    monochromatic(toHsl(color));
+    const hsl = toHsl(color);
+    hslOutput.style.backgroundColor = `hsl(${hsl.hue}, ${hsl.saturation * 100}%, ${hsl.lightness * 100}%`;
   };
 };
