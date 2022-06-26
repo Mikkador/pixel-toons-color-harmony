@@ -62,7 +62,7 @@ export class ColorRgb {
   }
 
   rgbCss() {
-    return `rgb(${this._r}, ${this._g}, ${this._b}`;
+    return `rgb(${this._r}, ${this._g}, ${this._b})`;
   }
 
   hslCss() {
