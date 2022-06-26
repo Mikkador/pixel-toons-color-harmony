@@ -43,7 +43,18 @@ const complementary = (color) => {
   return [color, newCol];
 };
 
-const choices = [monochromatic, complementary, analogous];
+const splitComplementary = (color) => {
+  const middle = color.copy();
+  middle.h -= 180;
+  middle.h = Math.abs(middle.h);
+  const a = middle.copy();
+  a.h -= 20;
+  const b = middle.copy();
+  b.h += 20;
+  return [color, a, b];
+};
+
+const choices = [monochromatic, complementary, analogous, splitComplementary];
 
 const getColorElement = (color) => {
   const element = document.createElement('div');
