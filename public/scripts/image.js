@@ -2,7 +2,7 @@
 Useful mixin functions for working with ImageData class. Created to avoid complications in working with pixel color array
  */
 
-import { Color } from './color.js';
+import { ColorRgb } from './color.js';
 
 //The number is four, because we use RGBA as our main format
 const colorParameterCount = 4;
@@ -25,7 +25,7 @@ const getPixelColor = (i, j) => {
   for (let i = 0; i < colorParameterCount; i++) {
     colorArray[i] = this.data[position + i];
   }
-  return new Color(...colorArray);
+  return new ColorRgb(...colorArray);
 };
 
 //Get array index of a pixel with (i, j) coordinates
