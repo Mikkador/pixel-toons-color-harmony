@@ -12,7 +12,12 @@ const complementary = (color) => {
   return newCol;
 };
 
-const outputIds = ['r', 'g', 'b', 'h', 's', 'l', 'v'];
+const outputIds = ['r', 'g', 'b', 'h', 's', 'l', 'v', 'hex'];
+const functionOutputs = {
+  'rgb': (color) => color.rgbCss(),
+  'hsl': (color) => color.hslCss(),
+  'hsv': (color) => color.hsvCss(),
+};
 
 const outputColor = (hex) => {
   //const output = document.getElementById('pick-output');
@@ -22,6 +27,10 @@ const outputColor = (hex) => {
     const element = document.getElementById(id);
     element.innerText = color[id];
   });
+  for (const [id,func] of Object.entries(functionOutputs)) {
+    const element = document.getElementById(id);
+    element.innerText = func(color);
+  }
   const newCol = complementary(color);
   hslOutput.style.backgroundColor = newCol.hslCss();
 };
