@@ -56,7 +56,6 @@ const toHsv = (color) => {
   } else {
     s = delta / max;
   }
-  console.log(h);
   return { h, s, v };
 };
 
@@ -81,6 +80,11 @@ function hsvToHsl({ h, s, v }) {
   return { h, s, l };
 }
 
+const complementary = (color) => {
+  color.h -= 180;
+  return color;
+};
+
 window.onload = () => {
   const picker = document.getElementById('pick-color');
   const output = document.getElementById('pick-output');
@@ -88,7 +92,7 @@ window.onload = () => {
   picker.oninput = () => {
     const color = getColor(picker.value);
     output.innerText = `${color.r} ${color.g} ${color.b}`;
-    const hsv = monochromatic(toHsv(color));
+    const hsv = complementary(toHsv(color));
     const hsl = hsvToHsl(hsv);
     hslOutput.style.backgroundColor = `hsl(${hsl.h}, ${hsl.s * 100}%, ${hsl.l * 100}%)`;
   };
