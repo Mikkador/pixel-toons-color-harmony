@@ -3,13 +3,13 @@ import { ColorRgb } from './color.js';
 const monochromatic = (color) => {
   const newCol = color.copy();
   newCol.v += 0.15;
-  return newCol;
+  return [newCol];
 };
 
 const complementary = (color) => {
   const newCol = color.copy();
   newCol.h -= 180;
-  return newCol;
+  return [newCol];
 };
 
 const outputIds = ['r', 'g', 'b', 'h', 's', 'l', 'v', 'hex'];
@@ -19,9 +19,22 @@ const functionOutputs = {
   'hsv': (color) => color.hsvCss(),
 };
 
+const getColorElement = (color) => {
+  const element = document.createElement('div');
+  element.style = `background-color: ${color.hslCss()};width: 50px;height: 50px;`;
+  return element;
+};
+
+const outputHarmony = (func) => {
+  const colors = func();
+  const harmonyContainer = document.getElementById('harmony-output');
+  harmonyContainer.innerHTML = '';
+  colors.forEach((color) => {
+    harmonyContainer.append(getColorElement(color));
+  });
+};
+
 const outputColor = (hex) => {
-  //const output = document.getElementById('pick-output');
-  const hslOutput = document.getElementById('hsl-output');
   const color = new ColorRgb(hex);
   outputIds.forEach((id) => {
     const element = document.getElementById(id);
@@ -31,8 +44,7 @@ const outputColor = (hex) => {
     const element = document.getElementById(id);
     element.innerText = func(color);
   }
-  const newCol = complementary(color);
-  hslOutput.style.backgroundColor = newCol.hslCss();
+  outputHarmony(() => complementary(color));
 };
 
 const pickColor = () => {

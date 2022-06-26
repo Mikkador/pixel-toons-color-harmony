@@ -49,3 +49,7 @@ input[type="color"] {
 ::-moz-focus-inner{
     padding: 0;
 }
+
+#harmony-output {
+    height: 50px;
+}

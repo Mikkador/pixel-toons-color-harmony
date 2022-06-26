@@ -54,7 +54,20 @@ export class ColorRgb {
   }
 
   fromHsv() {
-
+    const i = Math.floor(this._h * 6);
+    const f = this._h * 6 - i;
+    const p = this._v * (1 - this._s);
+    const q = this._v * (1 - f * this._s);
+    const t = this._v * (1 - (1 - f) * this._s);
+    switch (i % 6) {
+      case 0: this._r = this._v, this._g = t, this._b = p; break;
+      case 1: this._r = q, this._g = this._v, this._b = p; break;
+      case 2: this._r = p, this._g = this._v, this._b = t; break;
+      case 3: this._r = p, this._g = q, this._b = this._v; break;
+      case 4: this._r = t, this._g = p, this._b = this._v; break;
+      case 5: this._r = this._v, this._g = p, this._b = q; break;
+    }
+    this.fromRgb();
   }
 
   copy() {
