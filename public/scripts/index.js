@@ -2,6 +2,21 @@ import { ColorRgb } from './color.js';
 
 let harmonyFunc;
 
+const analogous = (color) => {
+  const colors = [color];
+  for (let i = 1; i <= 2; i++) {
+    const newCol = color.copy();
+    newCol.h += 10 * i;
+    colors.push(newCol);
+  }
+  for (let i = 1; i <= 2; i++) {
+    const newCol = color.copy();
+    newCol.h -= 10 * i;
+    colors.push(newCol);
+  }
+  return colors;
+};
+
 const monochromatic = (color) => {
   let val = color._v;
   const colors = [];
@@ -28,7 +43,7 @@ const complementary = (color) => {
   return [color, newCol];
 };
 
-const choices = [monochromatic, complementary];
+const choices = [monochromatic, complementary, analogous];
 
 const getColorElement = (color) => {
   const element = document.createElement('div');
