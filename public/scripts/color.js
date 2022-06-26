@@ -1,16 +1,20 @@
 export class ColorRgb {
   constructor(hex) {
-    this.hex = hex;
-    this.r = parseInt(hex.substr(1, 2), 16);
-    this.g = parseInt(hex.substr(3, 2), 16);
-    this.b = parseInt(hex.substr(5, 2), 16);
-    this.toHslv();
+    this._hex = hex;
+    this.fromHex();
   }
 
-  toHslv() {
-    const r1 = this.r / 255;
-    const g1 = this.g / 255;
-    const b1 = this.b / 255;
+  fromHex() {
+    this._r = parseInt(this._hex.substr(1, 2), 16);
+    this._g = parseInt(this._hex.substr(3, 2), 16);
+    this._b = parseInt(this._hex.substr(5, 2), 16);
+    this.fromRgb();
+  }
+
+  fromRgb() {
+    const r1 = this._r / 255;
+    const g1 = this._g / 255;
+    const b1 = this._b / 255;
     const max = Math.max(r1, g1, b1);
     const min = Math.min(r1, g1, b1);
     const delta = max - min;
@@ -31,30 +35,73 @@ export class ColorRgb {
     } else {
       s = delta / (1 - Math.abs(2 * l - 1));
     }
-    this.h = h;
-    this.s = s;
-    this.l = l;
-    this.v = max;
+    this._h = h;
+    this._s = s;
+    this._l = l;
+    this._v = max;
+  }
+
+  fromHsl() {
+    const newL = this.l / 100;
+    const a = this.s * Math.min(newL, 1 - newL) / 100;
+    const f = (n) => {
+      const k = (n + this.h / 30) % 12;
+      const color = newL - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      return Math.round(255 * color).toString(16).padStart(2, '0');
+    };
+    this._hex = `#${f(0)}${f(8)}${f(4)}`;
+    this.fromHex();
+  }
+
+  fromHsv() {
+
   }
 
   copy() {
     const col = new ColorRgb('');
-    col.r = this.r;
-    col.b = this.b;
-    col.g = this.g;
-    col.toHslv();
+    col._r = this._r;
+    col._b = this._b;
+    col._g = this._g;
+    col.fromRgb();
     return col;
   }
 
   rgbCss() {
-    return `rgb(${this.r}, ${this.g}, ${this.b}`;
+    return `rgb(${this._r}, ${this._g}, ${this._b}`;
   }
 
   hslCss() {
-    return `hsl(${this.h}, ${this.s * 100}%, ${this.l * 100}%)`;
+    return `hsl(${this._h}, ${this._s * 100}%, ${this._l * 100}%)`;
   }
 
   hsvCss() {
-    return `hsv(${this.h}, ${this.s * 100}%, ${this.v * 100}%)`;
+    return `hsv(${this._h}, ${this._s * 100}%, ${this._v * 100}%)`;
+  }
+
+  set h(value) {
+    this._h = value;
+    this.fromHsl();
+  }
+
+  get h() {
+    return this._h;
+  }
+
+  set s(value) {
+    this._s = value;
+    this.fromHsl();
+  }
+
+  get s() {
+    return this._s;
+  }
+
+  set l(value) {
+    this._l = value;
+    this.fromHsl();
+  }
+
+  get l() {
+    return this._l;
   }
 }

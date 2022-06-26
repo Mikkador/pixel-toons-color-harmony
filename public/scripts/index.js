@@ -16,7 +16,8 @@ const outputColor = (hex) => {
   const output = document.getElementById('pick-output');
   const hslOutput = document.getElementById('hsl-output');
   const color = new ColorRgb(hex);
-  output.innerText = `${color.r} ${color.g} ${color.b}`;
+  output.innerText = `${color._r} ${color._g} ${color._b}`;
+  console.log(color);
   const newCol = complementary(color);
   hslOutput.style.backgroundColor = newCol.hslCss();
 };
