@@ -53,8 +53,9 @@ export class ColorRgb {
   }
 
   fromHsv() {
-    const i = Math.floor(this._h * 6);
-    const f = this._h * 6 - i;
+    const h = this._h / 360;
+    const i = Math.floor(h * 6);
+    const f = h * 6 - i;
     const p = this._v * (1 - this._s);
     const q = this._v * (1 - f * this._s);
     const t = this._v * (1 - (1 - f) * this._s);
@@ -70,7 +71,6 @@ export class ColorRgb {
     this._g = Math.round(this._g * 255);
     this._b = Math.round(this._b * 255);
     this._hex = `#${this._r.toString(16)}${this._g.toString(16)}${this._b.toString(16)}`;
-    this.fromRgb();
   }
 
   copy() {
