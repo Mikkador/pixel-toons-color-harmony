@@ -1,9 +1,22 @@
 import { ColorRgb } from './color.js';
 
 const monochromatic = (color) => {
-  const newCol = color.copy();
-  newCol.v += 0.15;
-  return [color, newCol];
+  let val = color._v;
+  const colors = [];
+  while (val <= 1) {
+    const newCol = color.copy();
+    newCol.v = val;
+    val += 0.15;
+    colors.push(newCol);
+  }
+  val = color._v - 0.15;
+  while (val > 0.5) {
+    const newCol = color.copy();
+    newCol.v = val;
+    val -= 0.15;
+    colors.push(newCol);
+  }
+  return colors;
 };
 
 const complementary = (color) => {
@@ -46,7 +59,7 @@ const outputColor = (hex) => {
     const element = document.getElementById(id);
     element.innerText = func(color);
   }
-  outputHarmony(() => complementary(color));
+  outputHarmony(() => monochromatic(color));
 };
 
 const pickColor = () => {

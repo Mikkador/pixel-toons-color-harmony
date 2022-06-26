@@ -66,6 +66,9 @@ export class ColorRgb {
       case 4: this._r = t, this._g = p, this._b = this._v; break;
       case 5: this._r = this._v, this._g = p, this._b = q; break;
     }
+    this._r = Math.round(this._r * 255);
+    this._g = Math.round(this._g * 255);
+    this._b = Math.round(this._b * 255);
     this._hex = `#${this._r.toString(16)}${this._g.toString(16)}${this._b.toString(16)}`;
     this.fromRgb();
   }
