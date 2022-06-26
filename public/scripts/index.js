@@ -12,14 +12,23 @@ const complementary = (color) => {
   return newCol;
 };
 
-window.onload = () => {
-  const picker = document.getElementById('pick-color');
+const outputColor = (hex) => {
   const output = document.getElementById('pick-output');
   const hslOutput = document.getElementById('hsl-output');
-  picker.oninput = () => {
-    const color = new ColorRgb(picker.value);
-    output.innerText = `${color.r} ${color.g} ${color.b}`;
-    const newCol = complementary(color);
-    hslOutput.style.backgroundColor = newCol.hslCss();
+  const color = new ColorRgb(hex);
+  output.innerText = `${color.r} ${color.g} ${color.b}`;
+  const newCol = complementary(color);
+  hslOutput.style.backgroundColor = newCol.hslCss();
+};
+
+const pickColor = () => {
+  const input = document.getElementById('color-input');
+  input.oninput = () => {
+    outputColor(input.value);
   };
 };
+
+window.onload = () => {
+  pickColor();
+};
+
