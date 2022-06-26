@@ -12,30 +12,74 @@ const toHsl = (color) => {
   const max = Math.max(r1, g1, b1);
   const min = Math.min(r1, g1, b1);
   const delta = max - min;
-  let hue;
+  let h;
   if (delta === 0) {
-    hue = 0;
+    h = 0;
   } else if (max === r1) {
-    hue = 60 * (((g1 - b1) / delta) % 6);
+    h = 60 * (((g1 - b1) / delta) % 6);
   } else if (max === g1) {
-    hue = 60 * (((b1 - r1) / delta) + 2);
+    h = 60 * (((b1 - r1) / delta) + 2);
   } else {
-    hue = 60 * (((r1 - g1) / delta) + 4);
+    h = 60 * (((r1 - g1) / delta) + 4);
   }
-  const lightness = (max + min) / 2;
-  let saturation;
+  const l = (max + min) / 2;
+  let s;
   if (delta === 0) {
-    saturation = 0;
+    s = 0;
   } else {
-    saturation = delta / (1 - Math.abs(2 * lightness - 1));
+    s = delta / (1 - Math.abs(2 * l - 1));
   }
-  return { hue, saturation, lightness };
+  return { h, s, l };
+};
+
+const toHsv = (color) => {
+  const r1 = color.r / 255;
+  const g1 = color.g / 255;
+  const b1 = color.b / 255;
+  const max = Math.max(r1, g1, b1);
+  const min = Math.min(r1, g1, b1);
+  const delta = max - min;
+  let h;
+  if (delta === 0) {
+    h = 0;
+  } else if (max === r1) {
+    h = 60 * (((g1 - b1) / delta) % 6);
+  } else if (max === g1) {
+    h = 60 * (((b1 - r1) / delta) + 2);
+  } else {
+    h = 60 * (((r1 - g1) / delta) + 4);
+  }
+  const v = max;
+  let s;
+  if (max === 0) {
+    s = 0;
+  } else {
+    s = delta / max;
+  }
+  console.log(h);
+  return { h, s, v };
 };
 
 const monochromatic = (color) => {
-  color.saturation /= 2;
-  console.log(color);
+  color.v += 0.15;
+  return color;
 };
+
+function hsvToHsl({ h, s, v }) {
+  const l = (2 - s) * v / 2;
+
+  if (l !== 0) {
+    if (l === 1) {
+      s = 0;
+    } else if (l < 0.5) {
+      s = s * v / (l * 2);
+    } else {
+      s = s * v / (2 - l * 2);
+    }
+  }
+
+  return { h, s, l };
+}
 
 window.onload = () => {
   const picker = document.getElementById('pick-color');
@@ -44,9 +88,8 @@ window.onload = () => {
   picker.oninput = () => {
     const color = getColor(picker.value);
     output.innerText = `${color.r} ${color.g} ${color.b}`;
-    console.log(toHsl(color));
-    monochromatic(toHsl(color));
-    const hsl = toHsl(color);
-    hslOutput.style.backgroundColor = `hsl(${hsl.hue}, ${hsl.saturation * 100}%, ${hsl.lightness * 100}%`;
+    const hsv = monochromatic(toHsv(color));
+    const hsl = hsvToHsl(hsv);
+    hslOutput.style.backgroundColor = `hsl(${hsl.h}, ${hsl.s * 100}%, ${hsl.l * 100}%)`;
   };
 };
