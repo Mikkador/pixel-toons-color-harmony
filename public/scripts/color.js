@@ -135,4 +135,13 @@ export class ColorRgb {
   get l() {
     return Math.round(this._l * 100) + '%';
   }
+
+  set v(value) {
+    this._v = value;
+    this.fromHsv();
+  }
+
+  get v() {
+    return Math.round(this._v * 100) + '%';
+  }
 }
