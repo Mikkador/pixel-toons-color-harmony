@@ -62,15 +62,15 @@ export class ColorRgb {
   }
 
   rgbCss() {
-    return `rgb(${this._r}, ${this._g}, ${this._b})`;
+    return `rgb(${this.r}, ${this.g}, ${this.b})`;
   }
 
   hslCss() {
-    return `hsl(${this._h}, ${this._s * 100}%, ${this._l * 100}%)`;
+    return `hsl(${this.h}, ${this.s}, ${this.l})`;
   }
 
   hsvCss() {
-    return `hsv(${this._h}, ${this._s * 100}%, ${this._v * 100}%)`;
+    return `hsv(${this.h}, ${this.s}, ${this.v})`;
   }
 
   set hex(value) {
