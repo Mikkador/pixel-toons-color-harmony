@@ -3,13 +3,14 @@ import { ColorRgb } from './color.js';
 const monochromatic = (color) => {
   const newCol = color.copy();
   newCol.v += 0.15;
-  return [newCol];
+  return [color, newCol];
 };
 
 const complementary = (color) => {
   const newCol = color.copy();
   newCol.h -= 180;
-  return [newCol];
+  newCol.h = Math.abs(newCol.h);
+  return [color, newCol];
 };
 
 const outputIds = ['r', 'g', 'b', 'h', 's', 'l', 'v', 'hex'];
