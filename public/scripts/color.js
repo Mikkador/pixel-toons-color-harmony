@@ -1,5 +1,6 @@
 export class ColorRgb {
   constructor(hex) {
+    this.hex = hex;
     this.r = parseInt(hex.substr(1, 2), 16);
     this.g = parseInt(hex.substr(3, 2), 16);
     this.b = parseInt(hex.substr(5, 2), 16);
@@ -43,5 +44,17 @@ export class ColorRgb {
     col.g = this.g;
     col.toHslv();
     return col;
+  }
+
+  rgbCss() {
+    return `rgb(${this.r}, ${this.g}, ${this.b}`;
+  }
+
+  hslCss() {
+    return `hsl(${this.h}, ${this.s * 100}%, ${this.l * 100}%)`;
+  }
+
+  hsvCss() {
+    return `hsv(${this.h}, ${this.s * 100}%, ${this.v * 100}%)`;
   }
 }

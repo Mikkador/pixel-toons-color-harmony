@@ -20,6 +20,6 @@ window.onload = () => {
     const color = new ColorRgb(picker.value);
     output.innerText = `${color.r} ${color.g} ${color.b}`;
     const newCol = complementary(color);
-    hslOutput.style.backgroundColor = `hsl(${newCol.h}, ${newCol.s * 100}%, ${newCol.l * 100}%)`;
+    hslOutput.style.backgroundColor = newCol.hslCss();
   };
 };
