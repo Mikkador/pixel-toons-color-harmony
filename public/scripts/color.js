@@ -42,11 +42,10 @@ export class ColorRgb {
   }
 
   fromHsl() {
-    const newL = this.l / 100;
-    const a = this.s * Math.min(newL, 1 - newL) / 100;
+    const a = this._s * Math.min(this._l, 1 - this._l);
     const f = (n) => {
-      const k = (n + this.h / 30) % 12;
-      const color = newL - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+      const k = (n + this._h / 30) % 12;
+      const color = this._l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
       return Math.round(255 * color).toString(16).padStart(2, '0');
     };
     this._hex = `#${f(0)}${f(8)}${f(4)}`;
@@ -67,6 +66,7 @@ export class ColorRgb {
       case 4: this._r = t, this._g = p, this._b = this._v; break;
       case 5: this._r = this._v, this._g = p, this._b = q; break;
     }
+    this._hex = `#${this._r.toString(16)}${this._g.toString(16)}${this._b.toString(16)}`;
     this.fromRgb();
   }
 

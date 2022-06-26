@@ -21,7 +21,7 @@ const functionOutputs = {
 
 const getColorElement = (color) => {
   const element = document.createElement('div');
-  element.style = `background-color: ${color.hslCss()};width: 50px;height: 50px;`;
+  element.style = `background-color: ${color.rgbCss()};width: 50px;height: 50px;`;
   element.innerText = color.hex;
   return element;
 };
