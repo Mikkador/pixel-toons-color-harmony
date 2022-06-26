@@ -1,5 +1,7 @@
 import { ColorRgb } from './color.js';
 
+let harmonyFunc;
+
 const monochromatic = (color) => {
   let val = color._v;
   const colors = [];
@@ -26,12 +28,7 @@ const complementary = (color) => {
   return [color, newCol];
 };
 
-const outputIds = ['r', 'g', 'b', 'h', 's', 'l', 'v', 'hex'];
-const functionOutputs = {
-  'rgb': (color) => color.rgbCss(),
-  'hsl': (color) => color.hslCss(),
-  'hsv': (color) => color.hsvCss(),
-};
+const choices = [monochromatic, complementary];
 
 const getColorElement = (color) => {
   const element = document.createElement('div');
@@ -49,6 +46,13 @@ const outputHarmony = (func) => {
   });
 };
 
+const outputIds = ['r', 'g', 'b', 'h', 's', 'l', 'v', 'hex'];
+const functionOutputs = {
+  'rgb': (color) => color.rgbCss(),
+  'hsl': (color) => color.hslCss(),
+  'hsv': (color) => color.hsvCss(),
+};
+
 const outputColor = (hex) => {
   const color = new ColorRgb(hex);
   outputIds.forEach((id) => {
@@ -59,7 +63,24 @@ const outputColor = (hex) => {
     const element = document.getElementById(id);
     element.innerText = func(color);
   }
-  outputHarmony(() => monochromatic(color));
+  outputHarmony(() => harmonyFunc(color));
+};
+
+const setHarmonyChoice = () => {
+  const selector = document.getElementById('harmonies');
+  for (const choice of choices) {
+    const opt = document.createElement('option');
+    opt.value = choice.name;
+    opt.innerHTML = choice.name;
+    selector.appendChild(opt);
+  }
+  selector.oninput = () => {
+    const value = selector.value;
+    harmonyFunc = choices.find((choice) => choice.name === value);
+    const input = document.getElementById('color-input');
+    outputColor(input.value);
+  };
+  harmonyFunc = monochromatic;
 };
 
 const pickColor = () => {
@@ -70,6 +91,7 @@ const pickColor = () => {
 };
 
 window.onload = () => {
+  setHarmonyChoice();
   pickColor();
 };
 
